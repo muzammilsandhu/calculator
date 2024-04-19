@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="icon" type="image/png" href="images/calculator.png">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --font-primary: Arial, Helvetica, sans-serif;
+            --color-primary: #4d97f3;
+            --color-secondary: #e4f3fd;
+            --color-accent: #3365c0;
+            --color-hover: #2a4d8a;
+            --color-text: #fff;
+        }
+
+        @font-face {
+            font-family: 'Digital-7';
+            src: url('/font/digital-7.ttf') format('truetype');
+        }
+
+        body {
+            font-family: var(--font-primary);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #calculator {
+            background-color: var(--color-primary);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        #screen {
+            background-color: var(--color-secondary);
+            padding: 10px;
+            font-size: 100px;
+            text-align: right;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-family: 'Digital-7', Arial, sans-serif;
+        }
+
+        #button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        #button-container>div {
+            background-color: var(--color-accent);
+            color: var(--color-text);
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 10px;
+            font-size: 60px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #button-container>div:hover {
+            background-color: var(--color-hover);
+        }
+
+        @media (max-width: 500px) {
+            #calculator {
+                margin: 0 10px;
+            }
+
+            #screen {
+                font-size: 60px;
+            }
+
+            #button-container>div {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="calculator">
+        <div id="screen">0</div>
+        <div id="button-container">
+            <div onclick="appendToScreen('7')">7</div>
+            <div onclick="appendToScreen('8')">8</div>
+            <div onclick="appendToScreen('9')">9</div>
+            <div onclick="clearScreen()">C</div>
+            <div onclick="appendToScreen('4')">4</div>
+            <div onclick="appendToScreen('5')">5</div>
+            <div onclick="appendToScreen('6')">6</div>
+            <div onclick="appendToScreen('+')">+</div>
+            <div onclick="appendToScreen('1')">1</div>
+            <div onclick="appendToScreen('2')">2</div>
+            <div onclick="appendToScreen('3')">3</div>
+            <div onclick="appendToScreen('-')">-</div>
+            <div onclick="appendToScreen('*')">*</div>
+            <div onclick="appendToScreen('0')">0</div>
+            <div onclick="appendToScreen('/')">/</div>
+            <div onclick="calculate()">=</div>
+        </div>
+    </div>
+
+    <script> function appendToScreen(value) {
+            var screen = document.getElementById('screen');
+            if (screen.innerText === '0') {
+                screen.innerText = value;
+            } else {
+                screen.innerText += value
+            }
+        }
+
+        function clearScreen() {
+            document.getElementById('screen').innerText = '0';
+        }
+
+        function calculate() {
+            var expression = document.getElementById('screen').innerText;
+            try {
+                var result = eval(expression);
+                if (isNaN(result) || !isFinite(result)) {
+                    throw "Invalid Expression";
+                }
+                document.getElementById('screen').innerText = result;
+            } catch (error) {
+                document.getElementById('screen').innerText = 'Error';
+            }
+        }</script>
+</body>
+
+</html>
